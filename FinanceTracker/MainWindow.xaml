@@ -1,0 +1,27 @@
+﻿<Window x:Class="FinanceTracker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinanceTracker"
+        mc:Ignorable="d"
+        Title="Finance Tracker" Height="400" Width="600">
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="btnIncome" Grid.Column="0" Grid.Row="0" Margin="50,50,50,50" Click="btnIncome_Click">Income</Button>
+        <Button x:Name="btnBills" Grid.Column="1" Grid.Row="0" Margin="50,50,50,50" Click="btnBills_Click">Bills</Button>
+        <Button x:Name="btnSubscriptions" Grid.Column="0" Grid.Row="1" Margin="50,50,50,50" Click="btnSubscriptions_Click">Subscriptions</Button>
+        <Button x:Name="btnOtherExpenses" Grid.Column="1" Grid.Row="1" Margin="50,50,50,50" Click="btnOtherExpenses_Click">Other Expenses</Button>
+
+    </Grid>
+</Window>
