@@ -1,0 +1,27 @@
+﻿<Window x:Class="FinanceTracker.IncomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinanceTracker"
+        mc:Ignorable="d"
+        Title="IncomeWindow" Height="400" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="btnAddIncome" Margin="150,250,150,50" Click="btnAddIncome_Click">Add Income</Button>
+
+        <ListView x:Name="lvIncome" Margin="100,50,100,150">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Source" DisplayMemberBinding="{Binding Date}" Width="200"/>
+                    <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Date}" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>

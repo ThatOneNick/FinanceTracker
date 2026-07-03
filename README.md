@@ -10,7 +10,7 @@ A finance tracker desktop application to be used for tracking income, bills, sub
 
 - C#
 - WPF
-- WVVM
+- MVVM
 - SQL
 
 ## Planned Features
