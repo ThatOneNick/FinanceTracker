@@ -5,23 +5,130 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceTracker"
         mc:Ignorable="d"
-        Title="IncomeWindow" Height="400" Width="600" WindowStartupLocation="CenterScreen">
+        Title="IncomeWindow" Height="500" Width="400" WindowStartupLocation="CenterScreen"
+        HorizontalAlignment="Center"
+        HorizontalContentAlignment="Stretch" 
+        VerticalContentAlignment="Stretch" 
+        VerticalAlignment="Center">
     <Grid>
-
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="btnAddIncome" Margin="150,250,150,50" Click="btnAddIncome_Click">Add Income</Button>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <ListView x:Name="lvIncome" Margin="100,50,100,150">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Source" DisplayMemberBinding="{Binding Date}" Width="200"/>
-                    <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Date}" Width="200"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+            <Label x:Name="lblTotalIncome" Content="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ListView x:Name="lvIncome"
+                      Grid.Column="1"
+                      Grid.Row="1"
+                      ItemsSource="{Binding IncomeItems}" 
+                      Width="400" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">    
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Amount"
+                                        DisplayMemberBinding="{Binding Amount, StringFormat=C0}" 
+                                        Width="200"/>
+                        <GridViewColumn Header="Source" 
+                                        DisplayMemberBinding="{Binding Source}" 
+                                        Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="lblAmount"
+                   Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   HorizontalContentAlignment="Stretch" 
+                   VerticalContentAlignment="Stretch" 
+                   VerticalAlignment="Top"
+                   Margin="10"
+                   Content="Amount" 
+                   Height="auto" 
+                   Width="auto"
+                   FontSize="14"/>  
+
+            <Label x:Name="lblSource"
+                   Grid.Column="1"
+                   HorizontalAlignment="Center"
+                   HorizontalContentAlignment="Stretch" 
+                   VerticalContentAlignment="Stretch" 
+                   VerticalAlignment="Top"
+                   Margin="10"
+                   Content="Source" 
+                   Height="auto" 
+                   Width="auto" 
+                   FontSize="14"/>
+
+            <TextBox x:Name="txtAmount"
+                     Grid.Column="0"
+                     HorizontalAlignment="Center"
+                     HorizontalContentAlignment="Stretch" 
+                     VerticalContentAlignment="Stretch" 
+                     VerticalAlignment="Center"
+                     Height="auto" 
+                     Width="150"  
+                     FontSize="14"/>
+
+            <TextBox x:Name="txtSource"
+                     Grid.Column="1"
+                     HorizontalAlignment="Center"
+                     HorizontalContentAlignment="Stretch" 
+                     VerticalContentAlignment="Stretch" 
+                     VerticalAlignment="Center"
+                     Height="auto" 
+                     Width="150" 
+                     FontSize="14"/>
+        </Grid>
+        
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnAddIncome"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    VerticalAlignment="Top"
+                    Margin="20"
+                    Height="auto" 
+                    Width="auto" 
+                    Click="btnAddIncome_Click">Add Income</Button>
+
+            <Button x:Name="btnRemoveIncome"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    VerticalAlignment="Bottom"
+                    Margin="20"
+                    Height="auto" 
+                    Width="auto"
+                    Click="btnRemoveIncome_Click">Remove Income</Button>
+        </Grid>
 
     </Grid>
 </Window>
