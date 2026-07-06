@@ -29,9 +29,9 @@
             </Grid.ColumnDefinitions>
             
             <Button x:Name="btnIncome" Grid.Column="0" Grid.Row="0" Margin="5" Click="btnIncome_Click">Income</Button>
-            <Button x:Name="btnBills" Grid.Column="1" Grid.Row="0" Margin="5" Click="btnBills_Click">Bills</Button>
-            <Button x:Name="btnSubscriptions" Grid.Column="2" Grid.Row="0" Margin="5" Click="btnSubscriptions_Click">Subscriptions</Button>
-            <Button x:Name="btnOtherExpenses" Grid.Column="3" Grid.Row="0" Margin="5" Click="btnOtherExpenses_Click">Other Expenses</Button>
+            <Button x:Name="btnBills" Grid.Column="1" Grid.Row="0" Margin="5">Bills</Button>
+            <Button x:Name="btnSubscriptions" Grid.Column="2" Grid.Row="0" Margin="5">Subscriptions</Button>
+            <Button x:Name="btnOtherExpenses" Grid.Column="3" Grid.Row="0" Margin="5">Other Expenses</Button>
         </Grid>
 
         <Label x:Name="lblTotalIncome" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="100" Grid.Row="1" />
