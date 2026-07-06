@@ -1,5 +1,7 @@
 ﻿using FinanceTracker.Models;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.Json;
 
 namespace FinanceTracker.ViewModels
 {
@@ -8,19 +10,32 @@ namespace FinanceTracker.ViewModels
         public ObservableCollection<Income> IncomeItems { get; } = new();
         public ObservableCollection<double> IncomeAmounts { get; } = new();
         public double totalAmount;
-        public void AddIncome(double amount, string source)
+        public void AddIncome(double amount, string source, DateOnly date)
         {
             Income income = new Income
             {
                 Amount = amount,
-                Source = source
+                Source = source,
+                Date = date
             };
 
             IncomeItems.Add(income);
+
+            string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "incomedata.json");
+            string json = JsonSerializer.Serialize(IncomeItems);
+            File.WriteAllText(file, json);
+
         }
         public void RemoveIncome(Income selectedIncome)
         {
             IncomeItems.Remove(selectedIncome);
+            string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "incomedata.json");
+            string json = JsonSerializer.Serialize(IncomeItems);
+            File.WriteAllText(file, json);
         }
 
         public void AddToTotalIncome(double amount)
@@ -37,6 +52,25 @@ namespace FinanceTracker.ViewModels
         {
             IncomeAmounts.Remove(selectedIncome.Amount);
             totalAmount = IncomeAmounts.Sum();
+        }
+
+        public void LoadIncome()
+        {
+            string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "incomedata.json");
+            string json = File.ReadAllText(file);
+            ObservableCollection<Income>? income = 
+                JsonSerializer.Deserialize<ObservableCollection<Income>>(json);
+            if (income != null) 
+            { 
+                foreach (var incomeItem in income)
+                {
+                    IncomeItems.Add(incomeItem);
+                    double amount = incomeItem.Amount;
+                    AddToTotalIncome(amount);
+                } 
+            }
         }
     }
 }

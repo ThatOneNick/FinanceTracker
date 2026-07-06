@@ -14,14 +14,16 @@ namespace FinanceTracker
             InitializeComponent();
             DataContext = new IncomeViewModel();
             var viewModel = (IncomeViewModel)DataContext;
+            viewModel.LoadIncome();
             lblTotalIncome.Content = "Total Income: " + viewModel.totalAmount.ToString("C");
         }
         private void btnAddIncome_Click(object sender, RoutedEventArgs e)
         {
             if (double.TryParse(txtAmount.Text, out double amount))
             {
+                var date = DateOnly.FromDateTime(DateTime.Now);
                 var viewModel = (IncomeViewModel)DataContext;
-                viewModel.AddIncome(amount, txtSource.Text);
+                viewModel.AddIncome(amount, txtSource.Text, date);
                 viewModel.AddToTotalIncome(amount);
                 txtAmount.Text = string.Empty;
                 txtSource.Text = string.Empty;

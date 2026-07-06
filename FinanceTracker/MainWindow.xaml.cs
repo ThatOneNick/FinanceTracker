@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using FinanceTracker.ViewModels;
+using System.Windows;
 
 namespace FinanceTracker
 {
@@ -10,6 +11,10 @@ namespace FinanceTracker
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new IncomeViewModel();
+            var viewModel = (IncomeViewModel)DataContext;
+            viewModel.LoadIncome();
+            lblTotalIncome.Content = "Total Income: " + viewModel.totalAmount.ToString("C");
         }
 
         private void btnIncome_Click(object sender, RoutedEventArgs e)

@@ -36,16 +36,19 @@
                       Grid.Column="1"
                       Grid.Row="1"
                       ItemsSource="{Binding IncomeItems}" 
-                      Width="400" 
+                      Width="390" 
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">    
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Amount"
                                         DisplayMemberBinding="{Binding Amount, StringFormat=C0}" 
-                                        Width="200"/>
+                                        Width="130"/>
                         <GridViewColumn Header="Source" 
                                         DisplayMemberBinding="{Binding Source}" 
-                                        Width="200"/>
+                                        Width="130"/>
+                        <GridViewColumn Header="Date" 
+                                        DisplayMemberBinding="{Binding Date}" 
+                                        Width="130"/>
                     </GridView>
                 </ListView.View>
             </ListView>
