@@ -22,11 +22,10 @@ namespace FinanceTracker.ViewModels
             IncomeItems.Add(income);
 
             string file = Path.Combine(
-                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                              "incomedata.json");
+                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                          "incomedata.json");
             string json = JsonSerializer.Serialize(IncomeItems);
             File.WriteAllText(file, json);
-
         }
         public void RemoveIncome(Income selectedIncome)
         {
@@ -57,19 +56,25 @@ namespace FinanceTracker.ViewModels
         public void LoadIncome()
         {
             string file = Path.Combine(
-                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                              "incomedata.json");
-            string json = File.ReadAllText(file);
-            ObservableCollection<Income>? income = 
-                JsonSerializer.Deserialize<ObservableCollection<Income>>(json);
-            if (income != null) 
-            { 
-                foreach (var incomeItem in income)
+                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                          "incomedata.json");
+            if (!File.Exists(file))
+            {
+                File.Create(file);
+            } else
+            {
+                string json = File.ReadAllText(file);
+                ObservableCollection<Income>? income =
+                    JsonSerializer.Deserialize<ObservableCollection<Income>>(json);
+                if (income != null)
                 {
-                    IncomeItems.Add(incomeItem);
-                    double amount = incomeItem.Amount;
-                    AddToTotalIncome(amount);
-                } 
+                    foreach (var incomeItem in income)
+                    {
+                        IncomeItems.Add(incomeItem);
+                        double amount = incomeItem.Amount;
+                        AddToTotalIncome(amount);
+                    }
+                }
             }
         }
     }
