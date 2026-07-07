@@ -38,5 +38,12 @@ namespace FinanceTracker
             subscriptionWindow.Show();
             this.Close();
         }
+
+        private void btnOtherExpenses_Click(object sender, RoutedEventArgs e)
+        {
+            OtherExpenseWindow otherExpenseWindow = new OtherExpenseWindow();
+            otherExpenseWindow.Show();
+            this.Close();
+        }
     }
 }

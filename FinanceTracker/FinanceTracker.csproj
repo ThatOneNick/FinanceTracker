@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\OtherExpenseWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\SubscriptionWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

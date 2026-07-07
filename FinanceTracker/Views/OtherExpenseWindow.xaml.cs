@@ -6,27 +6,27 @@ using System.Windows;
 namespace FinanceTracker
 {
     /// <summary>
-    /// Interaction logic for SubscriptionWindow.xaml
+    /// Interaction logic for OtherExpenseWindow.xaml
     /// </summary>
-    public partial class SubscriptionWindow : Window
+    public partial class OtherExpenseWindow : Window
     {
-        public SubscriptionWindow()
+        public OtherExpenseWindow()
         {
             InitializeComponent();
-            DataContext = new SubscriptionViewModel();
-            var viewModel = (SubscriptionViewModel)DataContext;
-            viewModel.LoadSubscription();
+            DataContext = new ExpenseViewModel();
+            var viewModel = (ExpenseViewModel)DataContext;
+            viewModel.LoadExpense();
             CultureInfo culture = new CultureInfo("en-US");
             culture.NumberFormat.CurrencyNegativePattern = 1;
             lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C", culture);
         }
-        private void btnAddSubscription_Click(object sender, RoutedEventArgs e)
+        private void btnAddExpense_Click(object sender, RoutedEventArgs e)
         {
             if (double.TryParse(txtAmount.Text, out double amount))
             {
                 var date = DateOnly.FromDateTime(DateTime.Now);
-                var viewModel = (SubscriptionViewModel)DataContext;
-                viewModel.AddSubscription(amount, txtSource.Text, date);
+                var viewModel = (ExpenseViewModel)DataContext;
+                viewModel.AddExpense(amount, txtSource.Text, date);
                 viewModel.AddToTotalCost(amount);
                 txtAmount.Text = string.Empty;
                 txtSource.Text = string.Empty;
@@ -43,14 +43,14 @@ namespace FinanceTracker
                 MessageBox.Show("Amount must be numbers only.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void btnRemoveSubscription_Click(object sender, RoutedEventArgs e)
+        private void btnRemoveExpense_Click(object sender, RoutedEventArgs e)
         {
-            if (lvSubscriptions.SelectedItem != null)
+            if (lvExpenses.SelectedItem != null)
             {
-                var viewModel = (SubscriptionViewModel)DataContext;
-                Subscription selectedSubscription = (Subscription)lvSubscriptions.SelectedItem;
-                viewModel.RemoveSubscription(selectedSubscription);
-                viewModel.RemoveFromTotalCost(selectedSubscription);
+                var viewModel = (ExpenseViewModel)DataContext;
+                Expense selectedExpense = (Expense)lvExpenses.SelectedItem;
+                viewModel.RemoveExpense(selectedExpense);
+                viewModel.RemoveFromTotalCost(selectedExpense);
                 CultureInfo culture = new CultureInfo("en-US");
                 culture.NumberFormat.CurrencyNegativePattern = 1;
                 lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C", culture); 
@@ -59,6 +59,7 @@ namespace FinanceTracker
                 MessageBox.Show("An item must be selected to remove.", "No Item Selected", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void btnMainMenu_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();

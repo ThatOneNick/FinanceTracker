@@ -82,7 +82,12 @@ namespace FinanceTracker.ViewModels
                 billViewModel.LoadBill();
                 SubscriptionViewModel subscriptionViewModel = new SubscriptionViewModel();
                 subscriptionViewModel.LoadSubscription();
-                netIncome = totalAmount - billViewModel.totalCost - subscriptionViewModel.totalCost;
+                ExpenseViewModel expenseViewModel = new ExpenseViewModel();
+                expenseViewModel.LoadExpense();
+                netIncome = totalAmount;
+                netIncome -= billViewModel.totalCost;
+                netIncome -= subscriptionViewModel.totalCost;
+                netIncome -= expenseViewModel.totalCost;
             }
         }
     }
