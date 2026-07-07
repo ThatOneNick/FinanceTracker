@@ -1,5 +1,6 @@
 ﻿using FinanceTracker.Models;
 using FinanceTracker.ViewModels;
+using System.Globalization;
 using System.Windows;
 
 namespace FinanceTracker
@@ -15,7 +16,9 @@ namespace FinanceTracker
             DataContext = new BillViewModel();
             var viewModel = (BillViewModel)DataContext;
             viewModel.LoadBill();
-            lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C");
+            CultureInfo culture = new CultureInfo("en-US");
+            culture.NumberFormat.CurrencyNegativePattern = 1;
+            lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C", culture);
         }
         private void btnAddBill_Click(object sender, RoutedEventArgs e)
         {
@@ -27,7 +30,9 @@ namespace FinanceTracker
                 viewModel.AddToTotalCost(amount);
                 txtAmount.Text = string.Empty;
                 txtSource.Text = string.Empty;
-                lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C");
+                CultureInfo culture = new CultureInfo("en-US");
+                culture.NumberFormat.CurrencyNegativePattern = 1;
+                lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C", culture);
             }
             else if (string.IsNullOrWhiteSpace(txtAmount.Text) || string.IsNullOrWhiteSpace(txtSource.Text))
             {
@@ -44,7 +49,16 @@ namespace FinanceTracker
             Bill selectedBill = (Bill)lvBills.SelectedItem;
             viewModel.RemoveBill(selectedBill);
             viewModel.RemoveFromTotalCost(selectedBill);
-            lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C");
+            CultureInfo culture = new CultureInfo("en-US");
+            culture.NumberFormat.CurrencyNegativePattern = 1;
+            lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C", culture);
+        }
+
+        private void btnMainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
     }
 }

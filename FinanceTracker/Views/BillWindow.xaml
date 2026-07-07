@@ -116,7 +116,7 @@
                     HorizontalContentAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" 
                     VerticalAlignment="Top"
-                    Margin="20"
+                    Margin="10"
                     Height="auto" 
                     Width="auto" 
                     Click="btnAddBill_Click">Add Bill</Button>
@@ -126,11 +126,22 @@
                     HorizontalAlignment="Center"
                     HorizontalContentAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" 
-                    VerticalAlignment="Bottom"
-                    Margin="20"
+                    VerticalAlignment="Center"
+                    Margin="10"
                     Height="auto" 
                     Width="auto"
                     Click="btnRemoveBill_Click">Remove Bill</Button>
+            
+            <Button x:Name="btnMainMenu"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    VerticalAlignment="Bottom"
+                    Margin="10"
+                    Height="auto" 
+                    Width="auto"
+                    Click="btnMainMenu_Click">Main Menu</Button>
         </Grid>
 
     </Grid>

@@ -56,18 +56,19 @@ namespace FinanceTracker.ViewModels
 
         public void LoadBill()
         {
-            string file = Path.Combine(
-                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            string file = Path.Combine( Environment.GetFolderPath(
+                          Environment.SpecialFolder.MyDocuments),
                           "billdata.json");
             if (!File.Exists(file))
             {
-                File.Create(file);
+                File.WriteAllText(file, string.Empty);
             }
-            else
+            string json = File.ReadAllText(file);
+            if (json.Length != 0)
             {
-                string json = File.ReadAllText(file);
                 ObservableCollection<Bill>? bill =
-                    JsonSerializer.Deserialize<ObservableCollection<Bill>>(json);
+                    JsonSerializer.Deserialize<ObservableCollection<Bill>?>(json);
+
                 if (bill != null)
                 {
                     foreach (var billItem in bill)

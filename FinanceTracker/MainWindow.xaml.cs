@@ -1,4 +1,5 @@
 ﻿using FinanceTracker.ViewModels;
+using System.Globalization;
 using System.Windows;
 
 namespace FinanceTracker
@@ -14,7 +15,9 @@ namespace FinanceTracker
             DataContext = new IncomeViewModel();
             var incomeViewModel = (IncomeViewModel)DataContext;
             incomeViewModel.LoadIncome();
-            lblTotalIncome.Content = "Total Income: " + incomeViewModel.totalAmount.ToString("C");
+            CultureInfo culture = new CultureInfo("en-US");
+            culture.NumberFormat.CurrencyNegativePattern = 1;
+            lblTotalIncome.Content = "Net Income: " + incomeViewModel.netIncome.ToString("C", culture);
         }
         private void btnIncome_Click(object sender, RoutedEventArgs e)
         {
