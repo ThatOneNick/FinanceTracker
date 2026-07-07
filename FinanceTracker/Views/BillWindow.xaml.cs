@@ -36,22 +36,28 @@ namespace FinanceTracker
             }
             else if (string.IsNullOrWhiteSpace(txtAmount.Text) || string.IsNullOrWhiteSpace(txtSource.Text))
             {
-                MessageBox.Show("Please enter an amount and source.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter a value for amount and source.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
-                MessageBox.Show("Amount must be numbers.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Amount must be numbers only.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void btnRemoveBill_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = (BillViewModel)DataContext;
-            Bill selectedBill = (Bill)lvBills.SelectedItem;
-            viewModel.RemoveBill(selectedBill);
-            viewModel.RemoveFromTotalCost(selectedBill);
-            CultureInfo culture = new CultureInfo("en-US");
-            culture.NumberFormat.CurrencyNegativePattern = 1;
-            lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C", culture);
+            if (lvBills.SelectedItem != null)
+            {
+                var viewModel = (BillViewModel)DataContext;
+                Bill selectedBill = (Bill)lvBills.SelectedItem;
+                viewModel.RemoveBill(selectedBill);
+                viewModel.RemoveFromTotalCost(selectedBill);
+                CultureInfo culture = new CultureInfo("en-US");
+                culture.NumberFormat.CurrencyNegativePattern = 1;
+                lblTotalCost.Content = "Total Cost: " + viewModel.totalCost.ToString("C", culture); 
+            } else
+            {
+                MessageBox.Show("An item must be selected to remove.", "No Item Selected", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void btnMainMenu_Click(object sender, RoutedEventArgs e)

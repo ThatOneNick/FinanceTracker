@@ -1,0 +1,84 @@
+﻿using FinanceTracker.Models;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.Json;
+
+namespace FinanceTracker.ViewModels
+{
+    public class SubscriptionViewModel
+    {
+        public ObservableCollection<Subscription> SubscriptionItems { get; } = new();
+        public ObservableCollection<double> SubscriptionAmounts { get; } = new();
+        public double totalCost;
+        public void AddSubscription(double amount, string source, DateOnly date)
+        {
+            Subscription subscription = new Subscription
+            {
+                Amount = amount,
+                Source = source,
+                Date = date
+            };
+
+            SubscriptionItems.Add(subscription);
+
+            string file = Path.Combine(
+                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                          "subscriptiondata.json");
+            string json = JsonSerializer.Serialize(SubscriptionItems);
+            File.WriteAllText(file, json);
+
+        }
+        public void RemoveSubscription(Subscription selectedSubscription)
+        {
+            SubscriptionItems.Remove(selectedSubscription);
+            string file = Path.Combine(
+                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                          "subscriptiondata.json");
+            string json = JsonSerializer.Serialize(SubscriptionItems);
+            File.WriteAllText(file, json);
+        }
+
+        public void AddToTotalCost(double amount)
+        {
+            SubscriptionAmounts.Add(amount);
+            totalCost = SubscriptionAmounts.Sum();
+            SubscriptionsTotalCost subscriptionsTotalCost = new SubscriptionsTotalCost
+            {
+                TotalCost = totalCost
+            };
+        }
+
+        public void RemoveFromTotalCost(Subscription selectedSubscription)
+        {
+            SubscriptionAmounts.Remove(selectedSubscription.Amount);
+            totalCost = SubscriptionAmounts.Sum();
+        }
+
+        public void LoadSubscription()
+        {
+            string file = Path.Combine( Environment.GetFolderPath(
+                          Environment.SpecialFolder.MyDocuments),
+                          "subscriptiondata.json");
+            if (!File.Exists(file))
+            {
+                File.WriteAllText(file, string.Empty);
+            }
+            string json = File.ReadAllText(file);
+            if (json.Length != 0)
+            {
+                ObservableCollection<Subscription>? subscription =
+                    JsonSerializer.Deserialize<ObservableCollection<Subscription>?>(json);
+
+                if (subscription != null)
+                {
+                    foreach (var subscriptionItem in subscription)
+                    {
+                        SubscriptionItems.Add(subscriptionItem);
+                        double amount = subscriptionItem.Amount;
+                        AddToTotalCost(amount);
+                    }
+                }
+            }
+        }
+    }
+}
