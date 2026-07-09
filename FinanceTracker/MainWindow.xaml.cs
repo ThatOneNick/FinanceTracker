@@ -31,14 +31,12 @@ namespace FinanceTracker
             billWindow.Show();
             this.Close();
         }
-
         private void btnSubscriptions_Click(object sender, RoutedEventArgs e)
         {
             SubscriptionWindow subscriptionWindow = new SubscriptionWindow();
             subscriptionWindow.Show();
             this.Close();
         }
-
         private void btnOtherExpenses_Click(object sender, RoutedEventArgs e)
         {
             OtherExpenseWindow otherExpenseWindow = new OtherExpenseWindow();

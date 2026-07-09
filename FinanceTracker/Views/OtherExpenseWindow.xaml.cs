@@ -43,6 +43,10 @@ namespace FinanceTracker
                 MessageBox.Show("Amount must be numbers only.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void btnUpdateExpense_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void btnRemoveExpense_Click(object sender, RoutedEventArgs e)
         {
             if (lvExpenses.SelectedItem != null)
@@ -59,7 +63,6 @@ namespace FinanceTracker
                 MessageBox.Show("An item must be selected to remove.", "No Item Selected", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void btnMainMenu_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();

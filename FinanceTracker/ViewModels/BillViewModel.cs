@@ -1,7 +1,9 @@
 ﻿using FinanceTracker.Models;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
+using System.Windows;
 
 namespace FinanceTracker.ViewModels
 {
@@ -10,23 +12,55 @@ namespace FinanceTracker.ViewModels
         public ObservableCollection<Bill> BillItems { get; } = new();
         public ObservableCollection<double> BillAmounts { get; } = new();
         public double totalCost;
+        
         public void AddBill(double amount, string source, DateOnly date)
         {
-            Bill bill = new Bill
+            if (amount > 0)
             {
-                Amount = amount,
-                Source = source,
-                Date = date
-            };
+                Bill bill = new Bill
+                {
+                    Amount = amount,
+                    Source = source,
+                    Date = date
+                };
 
-            BillItems.Add(bill);
+                BillItems.Add(bill);
+                string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "billdata.json");
+                string json = JsonSerializer.Serialize(BillItems);
+                File.WriteAllText(file, json);
+            } else
+            {
+                MessageBox.Show("Amount must be a positive number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
+        }
+        public void UpdateBill(Bill selectedBill, double amount, string source, DateOnly date)
+        {
+            if (amount > 0)
+            {
+                Bill bill = new Bill
+                {
+                    Amount = amount,
+                    Source = source,
+                    Date = date
+                };
+                BillItems.Add(bill);
+                int originalIndex = BillItems.IndexOf(selectedBill);
+                int index = BillItems.IndexOf(bill);
+                BillItems.Move(index, originalIndex);
+                BillItems.Remove(selectedBill);
 
-            string file = Path.Combine(
-                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                          "billdata.json");
-            string json = JsonSerializer.Serialize(BillItems);
-            File.WriteAllText(file, json);
-
+                string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "billdata.json");
+                string json = JsonSerializer.Serialize(BillItems);
+                File.WriteAllText(file, json);
+            } else
+            {
+                MessageBox.Show("Amount must be a positive number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         public void RemoveBill(Bill selectedBill)
         {
@@ -37,7 +71,6 @@ namespace FinanceTracker.ViewModels
             string json = JsonSerializer.Serialize(BillItems);
             File.WriteAllText(file, json);
         }
-
         public void AddToTotalCost(double amount)
         {
             BillAmounts.Add(amount);
@@ -47,13 +80,11 @@ namespace FinanceTracker.ViewModels
                 TotalCost = totalCost
             };
         }
-
         public void RemoveFromTotalCost(Bill selectedBill)
         {
             BillAmounts.Remove(selectedBill.Amount);
             totalCost = BillAmounts.Sum();
         }
-
         public void LoadBill()
         {
             string file = Path.Combine( Environment.GetFolderPath(

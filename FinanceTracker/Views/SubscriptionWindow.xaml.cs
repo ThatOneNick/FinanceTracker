@@ -43,6 +43,10 @@ namespace FinanceTracker
                 MessageBox.Show("Amount must be numbers only.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void btnUpdateSubscription_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void btnRemoveSubscription_Click(object sender, RoutedEventArgs e)
         {
             if (lvSubscriptions.SelectedItem != null)

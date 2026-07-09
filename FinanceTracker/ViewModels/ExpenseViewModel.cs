@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Windows;
 
 namespace FinanceTracker.ViewModels
 {
@@ -12,20 +13,26 @@ namespace FinanceTracker.ViewModels
         public double totalCost;
         public void AddExpense(double amount, string source, DateOnly date)
         {
-            Expense expense = new Expense
+            if (amount > 0)
             {
-                Amount = amount,
-                Source = source,
-                Date = date
-            };
+                Expense expense = new Expense
+                {
+                    Amount = amount,
+                    Source = source,
+                    Date = date
+                };
 
-            ExpenseItems.Add(expense);
+                ExpenseItems.Add(expense);
 
-            string file = Path.Combine(
-                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                          "expensedata.json");
-            string json = JsonSerializer.Serialize(ExpenseItems);
-            File.WriteAllText(file, json);
+                string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "expensedata.json");
+                string json = JsonSerializer.Serialize(ExpenseItems);
+                File.WriteAllText(file, json); 
+            } else
+            {
+                MessageBox.Show("Amount must be a positive number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
         public void RemoveExpense(Expense selectedExpense)
@@ -37,7 +44,6 @@ namespace FinanceTracker.ViewModels
             string json = JsonSerializer.Serialize(ExpenseItems);
             File.WriteAllText(file, json);
         }
-
         public void AddToTotalCost(double amount)
         {
             ExpenseAmounts.Add(amount);
@@ -47,13 +53,11 @@ namespace FinanceTracker.ViewModels
                 TotalCost = totalCost
             };
         }
-
         public void RemoveFromTotalCost(Expense selectedExpense)
         {
             ExpenseAmounts.Remove(selectedExpense.Amount);
             totalCost = ExpenseAmounts.Sum();
         }
-
         public void LoadExpense()
         {
             string file = Path.Combine( Environment.GetFolderPath(

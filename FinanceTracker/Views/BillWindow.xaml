@@ -37,7 +37,7 @@
                       Grid.Row="1"
                       ItemsSource="{Binding BillItems}" 
                       Width="390" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">    
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="lvBills_SelectionChanged">    
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Amount"
@@ -120,6 +120,18 @@
                     Height="auto" 
                     Width="auto" 
                     Click="btnAddBill_Click">Add Bill</Button>
+            
+            <Button x:Name="btnUpdateBill"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    VerticalAlignment="Top"
+                    Margin="10"
+                    Height="auto" 
+                    Width="auto"
+                    Visibility="Collapsed"
+                    Click="btnUpdateBill_Click">Update Bill</Button>
 
             <Button x:Name="btnRemoveBill"
                     Grid.Column="1"

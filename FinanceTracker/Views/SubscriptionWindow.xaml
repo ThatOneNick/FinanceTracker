@@ -121,6 +121,18 @@
                     Width="auto" 
                     Click="btnAddSubscription_Click">Add Subscription</Button>
 
+            <Button x:Name="btnUpdateSubscription"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    VerticalAlignment="Top"
+                    Margin="10"
+                    Height="auto" 
+                    Width="auto" 
+                    Visibility="Collapsed"
+                    Click="btnUpdateSubscription_Click">Update Subscription</Button>
+            
             <Button x:Name="btnRemoveSubscription"
                     Grid.Column="1"
                     HorizontalAlignment="Center"

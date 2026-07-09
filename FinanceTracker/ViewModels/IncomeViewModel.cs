@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Windows;
 
 namespace FinanceTracker.ViewModels
 {
@@ -13,20 +14,53 @@ namespace FinanceTracker.ViewModels
         public double netIncome;
         public void AddIncome(double amount, string source, DateOnly date)
         {
-            Income income = new Income
+            if (amount > 0)
             {
-                Amount = amount,
-                Source = source,
-                Date = date
-            };
+                Income income = new Income
+                {
+                    Amount = amount,
+                    Source = source,
+                    Date = date
+                };
 
-            IncomeItems.Add(income);
+                IncomeItems.Add(income);
 
-            string file = Path.Combine(
-                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                          "incomedata.json");
-            string json = JsonSerializer.Serialize(IncomeItems);
-            File.WriteAllText(file, json);
+                string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "incomedata.json");
+                string json = JsonSerializer.Serialize(IncomeItems);
+                File.WriteAllText(file, json); 
+            } else
+            {
+                MessageBox.Show("Amount must be a positive number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        public void UpdateIncome(Income selectedIncome, double amount, string source, DateOnly date)
+        {
+            if (amount > 0)
+            {
+                Income income = new Income
+                {
+                    Amount = amount,
+                    Source = source,
+                    Date = date
+                };
+                IncomeItems.Add(income);
+                int originalIndex = IncomeItems.IndexOf(selectedIncome);
+                int index = IncomeItems.IndexOf(income);
+                IncomeItems.Move(index, originalIndex);
+                IncomeItems.Remove(selectedIncome);
+
+                string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "incomedata.json");
+                string json = JsonSerializer.Serialize(IncomeItems);
+                File.WriteAllText(file, json);
+            }
+            else
+            {
+                MessageBox.Show("Amount must be a positive number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         public void RemoveIncome(Income selectedIncome)
         {
@@ -37,7 +71,6 @@ namespace FinanceTracker.ViewModels
             string json = JsonSerializer.Serialize(IncomeItems);
             File.WriteAllText(file, json);
         }
-
         public void AddToTotalIncome(double amount)
         {
             IncomeAmounts.Add(amount);
@@ -47,13 +80,11 @@ namespace FinanceTracker.ViewModels
                 TotalAmount = totalAmount
             };
         }
-
         public void RemoveFromTotalIncome(Income selectedIncome)
         {
             IncomeAmounts.Remove(selectedIncome.Amount);
             totalAmount = IncomeAmounts.Sum();
         }
-
         public void LoadIncome()
         {
             string file = Path.Combine( Environment.GetFolderPath(

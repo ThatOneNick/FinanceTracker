@@ -121,6 +121,18 @@
                     Width="auto" 
                     Click="btnAddExpense_Click">Add Expense</Button>
 
+            <Button x:Name="btnUpdateExpense"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    VerticalAlignment="Top"
+                    Margin="10"
+                    Height="auto" 
+                    Width="auto" 
+                    Visibility="Collapsed"
+                    Click="btnUpdateExpense_Click">Update Expense</Button>
+            
             <Button x:Name="btnRemoveExpense"
                     Grid.Column="1"
                     HorizontalAlignment="Center"

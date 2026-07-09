@@ -11,7 +11,7 @@
         VerticalContentAlignment="Stretch" 
         VerticalAlignment="Center">
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
@@ -37,7 +37,7 @@
                       Grid.Row="1"
                       ItemsSource="{Binding IncomeItems}" 
                       Width="390" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">    
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="lvIncome_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Amount"
@@ -70,7 +70,7 @@
                    Content="Amount" 
                    Height="auto" 
                    Width="auto"
-                   FontSize="14"/>  
+                   FontSize="14"/>
 
             <Label x:Name="lblSource"
                    Grid.Column="1"
@@ -104,7 +104,7 @@
                      Width="150" 
                      FontSize="14"/>
         </Grid>
-        
+
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -121,6 +121,18 @@
                     Width="auto" 
                     Click="btnAddIncome_Click">Add Income</Button>
 
+            <Button x:Name="btnUpdateIncome"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    VerticalAlignment="Top"
+                    Margin="10"
+                    Height="auto" 
+                    Width="auto" 
+                    Visibility="Collapsed"
+                    Click="btnUpdateIncome_Click">Update Income</Button>
+
             <Button x:Name="btnRemoveIncome"
                     Grid.Column="1"
                     HorizontalAlignment="Center"
@@ -131,6 +143,7 @@
                     Height="auto" 
                     Width="auto"
                     Click="btnRemoveIncome_Click">Remove Income</Button>
+
             <Button x:Name="btnMainMenu"
                     Grid.Column="1"
                     HorizontalAlignment="Center"

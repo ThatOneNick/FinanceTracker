@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Windows;
 
 namespace FinanceTracker.ViewModels
 {
@@ -12,20 +13,26 @@ namespace FinanceTracker.ViewModels
         public double totalCost;
         public void AddSubscription(double amount, string source, DateOnly date)
         {
-            Subscription subscription = new Subscription
+            if (amount > 0)
             {
-                Amount = amount,
-                Source = source,
-                Date = date
-            };
+                Subscription subscription = new Subscription
+                {
+                    Amount = amount,
+                    Source = source,
+                    Date = date
+                };
 
-            SubscriptionItems.Add(subscription);
+                SubscriptionItems.Add(subscription);
 
-            string file = Path.Combine(
-                          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                          "subscriptiondata.json");
-            string json = JsonSerializer.Serialize(SubscriptionItems);
-            File.WriteAllText(file, json);
+                string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "subscriptiondata.json");
+                string json = JsonSerializer.Serialize(SubscriptionItems);
+                File.WriteAllText(file, json); 
+            } else
+            {
+                MessageBox.Show("Amount must be a positive number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
         public void RemoveSubscription(Subscription selectedSubscription)
@@ -37,7 +44,6 @@ namespace FinanceTracker.ViewModels
             string json = JsonSerializer.Serialize(SubscriptionItems);
             File.WriteAllText(file, json);
         }
-
         public void AddToTotalCost(double amount)
         {
             SubscriptionAmounts.Add(amount);
@@ -47,13 +53,11 @@ namespace FinanceTracker.ViewModels
                 TotalCost = totalCost
             };
         }
-
         public void RemoveFromTotalCost(Subscription selectedSubscription)
         {
             SubscriptionAmounts.Remove(selectedSubscription.Amount);
             totalCost = SubscriptionAmounts.Sum();
         }
-
         public void LoadSubscription()
         {
             string file = Path.Combine( Environment.GetFolderPath(
