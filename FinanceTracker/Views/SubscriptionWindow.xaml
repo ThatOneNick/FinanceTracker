@@ -33,11 +33,12 @@
             </Grid.ColumnDefinitions>
 
             <ListView x:Name="lvSubscriptions"
+                      ItemsSource="{Binding SubscriptionItems}"
+                      GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
                       Grid.Column="1"
-                      Grid.Row="1"
-                      ItemsSource="{Binding SubscriptionItems}" 
+                      Grid.Row="1" 
                       Width="390" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">    
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="lvSubscriptions_SelectionChanged">    
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Amount"
@@ -104,7 +105,7 @@
                      Width="150" 
                      FontSize="14"/>
         </Grid>
-        
+
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -132,7 +133,7 @@
                     Width="auto" 
                     Visibility="Collapsed"
                     Click="btnUpdateSubscription_Click">Update Subscription</Button>
-            
+
             <Button x:Name="btnRemoveSubscription"
                     Grid.Column="1"
                     HorizontalAlignment="Center"
@@ -143,7 +144,7 @@
                     Height="auto" 
                     Width="auto"
                     Click="btnRemoveSubscription_Click">Remove Subscription</Button>
-            
+
             <Button x:Name="btnMainMenu"
                     Grid.Column="1"
                     HorizontalAlignment="Center"
@@ -155,6 +156,5 @@
                     Width="auto"
                     Click="btnMainMenu_Click">Main Menu</Button>
         </Grid>
-
     </Grid>
 </Window>

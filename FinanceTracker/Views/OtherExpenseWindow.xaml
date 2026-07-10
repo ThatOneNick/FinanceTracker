@@ -33,11 +33,12 @@
             </Grid.ColumnDefinitions>
 
             <ListView x:Name="lvExpenses"
+                      ItemsSource="{Binding ExpenseItems}"
+                      GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
                       Grid.Column="1"
                       Grid.Row="1"
-                      ItemsSource="{Binding ExpenseItems}" 
                       Width="390" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">    
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="lvExpenses_SelectionChanged">    
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Amount"

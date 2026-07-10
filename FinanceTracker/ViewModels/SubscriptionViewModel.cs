@@ -35,6 +35,33 @@ namespace FinanceTracker.ViewModels
             }
 
         }
+        public void UpdateSubscription(Subscription selectedSubscription, double amount, string source, DateOnly date)
+        {
+            if (amount > 0)
+            {
+                Subscription subscription = new Subscription
+                {
+                    Amount = amount,
+                    Source = source,
+                    Date = date
+                };
+                SubscriptionItems.Add(subscription);
+                int originalIndex = SubscriptionItems.IndexOf(selectedSubscription);
+                int index = SubscriptionItems.IndexOf(subscription);
+                SubscriptionItems.Move(index, originalIndex);
+                SubscriptionItems.Remove(selectedSubscription);
+
+                string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "subscriptiondata.json");
+                string json = JsonSerializer.Serialize(SubscriptionItems);
+                File.WriteAllText(file, json);
+            }
+            else
+            {
+                MessageBox.Show("Amount must be a positive number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         public void RemoveSubscription(Subscription selectedSubscription)
         {
             SubscriptionItems.Remove(selectedSubscription);

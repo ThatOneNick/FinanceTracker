@@ -35,6 +35,33 @@ namespace FinanceTracker.ViewModels
             }
 
         }
+        public void UpdateExpense(Expense selectedExpense, double amount, string source, DateOnly date)
+        {
+            if (amount > 0)
+            {
+                Expense expense = new Expense
+                {
+                    Amount = amount,
+                    Source = source,
+                    Date = date
+                };
+                ExpenseItems.Add(expense);
+                int originalIndex = ExpenseItems.IndexOf(selectedExpense);
+                int index = ExpenseItems.IndexOf(expense);
+                ExpenseItems.Move(index, originalIndex);
+                ExpenseItems.Remove(selectedExpense);
+
+                string file = Path.Combine(
+                              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                              "expensedata.json");
+                string json = JsonSerializer.Serialize(ExpenseItems);
+                File.WriteAllText(file, json);
+            }
+            else
+            {
+                MessageBox.Show("Amount must be a positive number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         public void RemoveExpense(Expense selectedExpense)
         {
             ExpenseItems.Remove(selectedExpense);

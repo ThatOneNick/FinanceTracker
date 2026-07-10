@@ -33,9 +33,10 @@
             </Grid.ColumnDefinitions>
 
             <ListView x:Name="lvIncome"
+                      ItemsSource="{Binding IncomeItems}"
+                      GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
                       Grid.Column="1"
                       Grid.Row="1"
-                      ItemsSource="{Binding IncomeItems}" 
                       Width="390" 
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="lvIncome_SelectionChanged">
                 <ListView.View>
