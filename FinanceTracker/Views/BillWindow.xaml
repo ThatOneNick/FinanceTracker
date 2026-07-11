@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceTracker"
         mc:Ignorable="d"
-        Title="BillWindow" Height="500" Width="400" WindowStartupLocation="CenterScreen"
+        Title="BillWindow" Height="500" Width="500" WindowStartupLocation="CenterScreen"
         HorizontalAlignment="Center"
         HorizontalContentAlignment="Stretch" 
         VerticalContentAlignment="Stretch" 
-        VerticalAlignment="Center">
+        VerticalAlignment="Center" Background="#FFEFFFFE">
     <Grid>
         
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -67,7 +67,7 @@
                    HorizontalContentAlignment="Stretch" 
                    VerticalContentAlignment="Stretch" 
                    VerticalAlignment="Top"
-                   Margin="10"
+                   Margin="5"
                    Content="Amount" 
                    Height="auto" 
                    Width="auto"
@@ -79,7 +79,7 @@
                    HorizontalContentAlignment="Stretch" 
                    VerticalContentAlignment="Stretch" 
                    VerticalAlignment="Top"
-                   Margin="10"
+                   Margin="5"
                    Content="Source" 
                    Height="auto" 
                    Width="auto" 
@@ -117,10 +117,11 @@
                     HorizontalContentAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" 
                     VerticalAlignment="Top"
-                    Margin="10"
+                    Margin="5"
+                    Padding="5"
                     Height="auto" 
                     Width="auto" 
-                    Click="btnAddBill_Click">Add Bill</Button>
+                    Click="btnAddBill_Click" Background="White">Add Bill</Button>
             
             <Button x:Name="btnUpdateBill"
                     Grid.Column="0"
@@ -128,7 +129,7 @@
                     HorizontalContentAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" 
                     VerticalAlignment="Top"
-                    Margin="10"
+                    Padding="5"
                     Height="auto" 
                     Width="auto"
                     Visibility="Collapsed"
@@ -140,10 +141,10 @@
                     HorizontalContentAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" 
                     VerticalAlignment="Center"
-                    Margin="10"
+                    Padding="5"
                     Height="auto" 
                     Width="auto"
-                    Click="btnRemoveBill_Click">Remove Bill</Button>
+                    Click="btnRemoveBill_Click" Background="White">Remove Bill</Button>
             
             <Button x:Name="btnMainMenu"
                     Grid.Column="1"
@@ -151,10 +152,11 @@
                     HorizontalContentAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" 
                     VerticalAlignment="Bottom"
-                    Margin="10"
+                    Margin="5"
+                    Padding="5"
                     Height="auto" 
                     Width="auto"
-                    Click="btnMainMenu_Click">Main Menu</Button>
+                    Click="btnMainMenu_Click" Background="White">Main Menu</Button>
         </Grid>
 
     </Grid>
