@@ -90,25 +90,33 @@ namespace FinanceTracker.ViewModels
             string file = Path.Combine( Environment.GetFolderPath(
                           Environment.SpecialFolder.MyDocuments),
                           "expensedata.json");
-            if (!File.Exists(file))
+            try
             {
-                File.WriteAllText(file, string.Empty);
-            }
-            string json = File.ReadAllText(file);
-            if (json.Length != 0)
-            {
-                ObservableCollection<Expense>? expense =
-                    JsonSerializer.Deserialize<ObservableCollection<Expense>?>(json);
-
-                if (expense != null)
+                if (!File.Exists(file))
                 {
-                    foreach (var expenseItem in expense)
+                    File.WriteAllText(file, string.Empty);
+                }
+                string json = File.ReadAllText(file);
+                if (json.Length != 0)
+                {
+                    ObservableCollection<Expense>? expense =
+                        JsonSerializer.Deserialize<ObservableCollection<Expense>?>(json);
+
+                    if (expense != null)
                     {
-                        ExpenseItems.Add(expenseItem);
-                        double amount = expenseItem.Amount;
-                        AddToTotalCost(amount);
+                        foreach (var expenseItem in expense)
+                        {
+                            ExpenseItems.Add(expenseItem);
+                            double amount = expenseItem.Amount;
+                            AddToTotalCost(amount);
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Expense data failed to load.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             }
         }
     }

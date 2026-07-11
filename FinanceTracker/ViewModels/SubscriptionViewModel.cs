@@ -90,25 +90,33 @@ namespace FinanceTracker.ViewModels
             string file = Path.Combine( Environment.GetFolderPath(
                           Environment.SpecialFolder.MyDocuments),
                           "subscriptiondata.json");
-            if (!File.Exists(file))
+            try
             {
-                File.WriteAllText(file, string.Empty);
-            }
-            string json = File.ReadAllText(file);
-            if (json.Length != 0)
-            {
-                ObservableCollection<Subscription>? subscription =
-                    JsonSerializer.Deserialize<ObservableCollection<Subscription>?>(json);
-
-                if (subscription != null)
+                if (!File.Exists(file))
                 {
-                    foreach (var subscriptionItem in subscription)
+                    File.WriteAllText(file, string.Empty);
+                }
+                string json = File.ReadAllText(file);
+                if (json.Length != 0)
+                {
+                    ObservableCollection<Subscription>? subscription =
+                        JsonSerializer.Deserialize<ObservableCollection<Subscription>?>(json);
+
+                    if (subscription != null)
                     {
-                        SubscriptionItems.Add(subscriptionItem);
-                        double amount = subscriptionItem.Amount;
-                        AddToTotalCost(amount);
+                        foreach (var subscriptionItem in subscription)
+                        {
+                            SubscriptionItems.Add(subscriptionItem);
+                            double amount = subscriptionItem.Amount;
+                            AddToTotalCost(amount);
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Subscription data failed to load.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             }
         }
     }

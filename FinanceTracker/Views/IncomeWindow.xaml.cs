@@ -116,7 +116,6 @@ namespace FinanceTracker
         
         GridViewColumnHeader _lastHeaderClicked = null;
         ListSortDirection _lastDirection = ListSortDirection.Ascending;
-
         private void Sort(string sortBy, ListSortDirection direction)
         {
             ICollectionView dataView =
@@ -127,7 +126,6 @@ namespace FinanceTracker
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
         }
-
         void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
         {
             var headerClicked = e.OriginalSource as GridViewColumnHeader;

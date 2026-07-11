@@ -90,35 +90,43 @@ namespace FinanceTracker.ViewModels
             string file = Path.Combine( Environment.GetFolderPath(
                           Environment.SpecialFolder.MyDocuments),
                           "incomedata.json");
-            if (!File.Exists(file))
+            try
             {
-                File.WriteAllText(file, string.Empty);
-            }
-            string json = File.ReadAllText(file);
-            if (json.Length != 0)
-            {
-                ObservableCollection<Income>? income =
-                    JsonSerializer.Deserialize<ObservableCollection<Income>?>(json);
-
-                if (income != null)
+                if (!File.Exists(file))
                 {
-                    foreach (var incomeItem in income)
-                    {
-                        IncomeItems.Add(incomeItem);
-                        double amount = incomeItem.Amount;
-                        AddToTotalIncome(amount);
-                    }
+                    File.WriteAllText(file, string.Empty);
                 }
-                BillViewModel billViewModel = new BillViewModel();
-                billViewModel.LoadBill();
-                SubscriptionViewModel subscriptionViewModel = new SubscriptionViewModel();
-                subscriptionViewModel.LoadSubscription();
-                ExpenseViewModel expenseViewModel = new ExpenseViewModel();
-                expenseViewModel.LoadExpense();
-                netIncome = totalAmount;
-                netIncome -= billViewModel.totalCost;
-                netIncome -= subscriptionViewModel.totalCost;
-                netIncome -= expenseViewModel.totalCost;
+                string json = File.ReadAllText(file);
+                if (json.Length != 0)
+                {
+                    ObservableCollection<Income>? income =
+                        JsonSerializer.Deserialize<ObservableCollection<Income>?>(json);
+
+                    if (income != null)
+                    {
+                        foreach (var incomeItem in income)
+                        {
+                            IncomeItems.Add(incomeItem);
+                            double amount = incomeItem.Amount;
+                            AddToTotalIncome(amount);
+                        }
+                    }
+                    BillViewModel billViewModel = new BillViewModel();
+                    billViewModel.LoadBill();
+                    SubscriptionViewModel subscriptionViewModel = new SubscriptionViewModel();
+                    subscriptionViewModel.LoadSubscription();
+                    ExpenseViewModel expenseViewModel = new ExpenseViewModel();
+                    expenseViewModel.LoadExpense();
+                    netIncome = totalAmount;
+                    netIncome -= billViewModel.totalCost;
+                    netIncome -= subscriptionViewModel.totalCost;
+                    netIncome -= expenseViewModel.totalCost;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Income data failed to load.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             }
         }
     }

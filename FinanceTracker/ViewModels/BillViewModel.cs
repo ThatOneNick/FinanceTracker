@@ -90,25 +90,33 @@ namespace FinanceTracker.ViewModels
             string file = Path.Combine( Environment.GetFolderPath(
                           Environment.SpecialFolder.MyDocuments),
                           "billdata.json");
-            if (!File.Exists(file))
+            try
             {
-                File.WriteAllText(file, string.Empty);
-            }
-            string json = File.ReadAllText(file);
-            if (json.Length != 0)
-            {
-                ObservableCollection<Bill>? bill =
-                    JsonSerializer.Deserialize<ObservableCollection<Bill>?>(json);
-
-                if (bill != null)
+                if (!File.Exists(file))
                 {
-                    foreach (var billItem in bill)
+                    File.WriteAllText(file, string.Empty);
+                }
+                string json = File.ReadAllText(file);
+                if (json.Length != 0)
+                {
+                    ObservableCollection<Bill>? bill =
+                        JsonSerializer.Deserialize<ObservableCollection<Bill>?>(json);
+
+                    if (bill != null)
                     {
-                        BillItems.Add(billItem);
-                        double amount = billItem.Amount;
-                        AddToTotalCost(amount);
+                        foreach (var billItem in bill)
+                        {
+                            BillItems.Add(billItem);
+                            double amount = billItem.Amount;
+                            AddToTotalCost(amount);
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Bill data failed to load.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             }
         }
     }
